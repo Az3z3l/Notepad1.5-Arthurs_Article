@@ -2,13 +2,13 @@
 
 ### Challenge Description
 
-  ??????
+Arthur Morgan was asked to retrieve an important article from Cornwall's computer. Help him steal it. 
 
 ### Challenge File
 [Source](./Handout/arthursarticle.zip)
 
 ### MD5 Hash: 
-`fc10f1d03e258b1e697a826541e5b2a1`
+`0bac8f0037b5c3da16c78a24e0a0932e`
 
 
 ### Short Writeup
