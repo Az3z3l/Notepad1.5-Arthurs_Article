@@ -8,7 +8,7 @@ Arthur Morgan was asked to retrieve an important article from Cornwall's compute
 [Source](./Handout/arthursarticle.zip)
 
 ### MD5 Hash: 
-`0bac8f0037b5c3da16c78a24e0a0932e`
+`24b355cdda9c70bf70b8db4cdcf00bf6`
 
 
 ### Short Writeup

@@ -9,10 +9,12 @@ import (
 	"log"
 	"math/rand"
 	"net/http"
+	"os"
 	"regexp"
 	"strings"
 	"time"
 
+	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 )
 
@@ -42,7 +44,7 @@ func headerSetter(w http.ResponseWriter, header map[string]string) {
 
 func getIDFromCooke(r *http.Request, w http.ResponseWriter) string {
 	var cooke, err = r.Cookie("id")
-	re := regexp.MustCompile("^[a-zA-Z0-9]*$")
+	re := regexp.MustCompile("^[a-zA-Z0-9]+$")
 	var cookeval string
 	if err == nil && re.MatchString(cooke.Value) && len(cooke.Value) <= 35 && len(cooke.Value) >= 30 {
 		cookeval = cooke.Value
@@ -172,13 +174,14 @@ func main() {
 	r.HandleFunc("/find", find).Methods("GET")
 	r.PathPrefix("/").Handler(http.StripPrefix("/", http.FileServer(http.Dir(dir))))
 	fmt.Println("Server started at http://0.0.0.0:3000")
+	loggedRouter := handlers.LoggingHandler(os.Stdout, r)
 	srv := &http.Server{
 		Addr: "0.0.0.0:3000",
 		// Good practice to set timeouts to avoid Slowloris attacks.
 		WriteTimeout: time.Second * 15,
 		ReadTimeout:  time.Second * 15,
 		IdleTimeout:  time.Second * 60,
-		Handler:      r, // Pass our instance of gorilla/mux in.
+		Handler:      loggedRouter, // Pass our instance of gorilla/mux in.
 	}
 	if err := srv.ListenAndServe(); err != nil {
 		log.Println(err)

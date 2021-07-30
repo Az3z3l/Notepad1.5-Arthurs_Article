@@ -1,4 +1,4 @@
-module notepad1
+module notepad15
 
 go 1.16
 
