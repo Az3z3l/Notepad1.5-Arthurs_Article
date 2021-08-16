@@ -81,7 +81,7 @@ func get(w http.ResponseWriter, r *http.Request) {
 	headerSetter(w, cType)
 	if x == "" {
 		fmt.Fprintf(w, "404 No Note Found")
-	} else if regexp.MustCompile("<[a-zA-Z0-9]").MatchString(x) { // http://portswigger-labs.net/impossible-labs/basic-context-waf-blocks-a-z.php
+	} else if regexp.MustCompile("<[a-zA-Z0-9]").MatchString(x) {
 		fmt.Fprintf(w, html.EscapeString(x))
 	} else {
 		fmt.Fprintf(w, x)
@@ -169,10 +169,11 @@ func main() {
 	flag.Parse()
 	go resetNotes()
 	r := mux.NewRouter()
-	r.HandleFunc("/add", add).Methods("POST")
-	r.HandleFunc("/get", get).Methods("GET")
-	r.HandleFunc("/find", find).Methods("GET")
-	r.PathPrefix("/").Handler(http.StripPrefix("/", http.FileServer(http.Dir(dir))))
+	s := r.Host("chall.notepad15.gq:1515").Subrouter()
+	s.HandleFunc("/add", add).Methods("POST")
+	s.HandleFunc("/get", get).Methods("GET")
+	s.HandleFunc("/find", find).Methods("GET")
+	s.PathPrefix("/").Handler(http.StripPrefix("/", http.FileServer(http.Dir(dir))))
 	fmt.Println("Server started at http://0.0.0.0:3000")
 	loggedRouter := handlers.LoggingHandler(os.Stdout, r)
 	srv := &http.Server{

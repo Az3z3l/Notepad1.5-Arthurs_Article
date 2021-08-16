@@ -7,10 +7,6 @@ Arthur Morgan was asked to retrieve an important article from Cornwall's compute
 ### Challenge File
 [Source](./Handout/arthursarticle.zip)
 
-### MD5 Hash: 
-`24b355cdda9c70bf70b8db4cdcf00bf6`
-
-
 ### Short Writeup
 
 * Exploit CRLF in go's Header().Set() library to inject arbitrary html using the header name. 
